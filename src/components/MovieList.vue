@@ -1,9 +1,11 @@
 <template>
-    <v-container class="fill-height">
-      <v-responsive class="align-center text-center fill-height">
-        <MovieCard></MovieCard>
-        {{ movieStore.movies }}
+    <v-container padding="0" class="d-flex flex-wrap flex-row">
+      <v-responsive v-for="movie in movieStore.movies" width="200">
+        <MovieCard :title="movie.name" :image="movie.poster.url" :rating="movie.rating.imdb" :year="movie.year" padding="0"></MovieCard>
       </v-responsive>
+        
+        
+
     </v-container>
 </template>
   
@@ -13,7 +15,7 @@ import MovieCard from './MovieCard.vue'
 
  const movieStore =  useMovieStore()
 
-//  movieStore.watchMovies
+movieStore.watchMovies()
 
 console.log(11)
 </script>

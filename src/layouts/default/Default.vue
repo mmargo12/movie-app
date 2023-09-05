@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app padding="0">
     <default-view />
   </v-app>
 </template>

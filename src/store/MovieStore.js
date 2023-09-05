@@ -17,7 +17,6 @@ export const useMovieStore = defineStore('movieStore', () => {
         { value: 'length', name: 'По длине'}
     ])
     
-    //сортировка и поиск
     const sortedMovies = computed(() => {
         return [...movies].sort((movie1, movie2) => movie1[selectedSort]?.localCompare(movie2[selectedSort]))
     })
@@ -25,10 +24,9 @@ export const useMovieStore = defineStore('movieStore', () => {
         return sortedMovies.filter(movie => movie.title.toLowerCase().includes(searchQuery.toLowerCase()))
     })
 
-    //movies.value = JSON.parse(kino1) это херня полнейшая
-    movies.value = 'hi meoew'
+    movies.value = kino1.docs
 
-    const watchMovies = () => console.log(movies)
+    const watchMovies = () => console.log(movies.value)
 
     return {
         movies, watchMovies

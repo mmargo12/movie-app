@@ -1,26 +1,56 @@
 <template>
-    <v-container class="fill-height">
-      <v-responsive class="align-center text-center fill-height">
-        <v-card>
-            <v-card-item>
-                <v-card-title>Title</v-card-title>
-                <v-card-subtitle>Subtitle</v-card-subtitle>
-            </v-card-item>
-            <v-card-text>Text</v-card-text>
-            <v-card-actions>
-                <v-btn>See more</v-btn>
-            </v-card-actions>
+    <v-container class="fill-height" padding="0">
+        <v-hover v-slot="{isHovering, props}">
+            <v-card 
+            color="black" 
+            width="185" 
+            height="277"
+            v-bind="props"
+        >
+            <v-img 
+                :src="image" 
+                cover
+                :aspect-ratio="9/16"
+            >
+                <v-expand-transition>
+                    <v-card-item 
+                        class="pa-0 bg-black d-flex flex-column 
+                        justify-start align-start transition-fast-in-fast-out 
+                        text-left flex-start card" 
+                        v-if="isHovering"
+                        style="height: 100%"
+                    >
+                        <v-card-title class="text-white title text-wrap flex-start align-self-start" min-height="100">{{ title}}</v-card-title>
+                        <v-card-subtitle class="text- bg-yellow d-inline pa-1 align-self-start">{{ rating }}</v-card-subtitle>
+                        <v-card-subtitle>{{ year }}</v-card-subtitle>
+                    </v-card-item>
+                </v-expand-transition>
+            
+            </v-img>
         </v-card>
-      </v-responsive>
+        </v-hover>
     </v-container>
 </template>
   
 <script setup>
+import { ref } from 'vue';
     const props = defineProps({
         title: String,
         rating: Number,
         image: String,
         year: Number
     })
-</script>
-  
+    const moreInfo = ref(false)
+
+    const showInfo = () => {
+        moreInfo.value = !moreInfo.value
+        console.log(moreInfo.value);
+    }
+</script>  
+
+<style scoped>
+.card {
+    text-align: left;
+
+}
+</style>
