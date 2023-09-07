@@ -2,8 +2,8 @@
         <v-hover v-slot="{isHovering, props}">
             <v-card 
             color="black" 
-            width="250" 
-            height="400"
+            width="225" 
+            height="360"
             v-bind="props"
             >
                 <v-img 
@@ -20,7 +20,7 @@
                             style="height: 100%"
                         >
                             <v-card-title class="text-white title text-wrap flex-start align-self-start" min-height="100">{{ movie.name }}</v-card-title>
-                            <v-card-subtitle class="text- bg-yellow d-inline pa-1 align-self-start">{{ movie.rating.imdb }}</v-card-subtitle>
+                            <v-card-subtitle class="bg-yellow d-inline pa-1 align-self-start">{{ movie.rating.imdb }}</v-card-subtitle>
                             <v-card-subtitle>{{ movie.year }}</v-card-subtitle>
                         </v-card-item>
                     </v-expand-transition>

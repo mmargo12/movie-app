@@ -1,23 +1,23 @@
 <template>
-  <h1>Страница с фильмами</h1>
+  <NavBar></NavBar>
   <v-container>
-    <h2>Поиск</h2>
     <v-text-field 
-      placeholder="Поиск" 
+      label="Поиск" 
       prepend-inner-icon="mdi-magnify"
       v-model="movieStore.searchQuery"
-    ></v-text-field>
-  </v-container>
-  <v-container>
-    <h2>Сортировать</h2>
-    <v-select 
+      variant="outlined"
       density="compact" 
-      placeholder="Сортировать"
+    ></v-text-field>
+    <v-select 
+      label="Сортировать"
+      density="compact"  
       :items="movieStore.sortOptions"
       v-model="movieStore.selectedSort"
+      variant="outlined"
+      class="select"
     ></v-select>
   </v-container>
-  <MovieList :movies="movieStore.paginationedMovies"></MovieList>
+  <MovieList :movies="movieStore.paginationedMovies" class="pt-0"></MovieList>
   <v-container>
     <v-pagination
       v-model="movieStore.page"
@@ -29,7 +29,14 @@
 
 <script setup>
 import MovieList from '@/components/MovieList.vue'
+import NavBar from '@/components/Navbar.vue'
 import { useMovieStore } from '../store/MovieStore'
 
 const movieStore =  useMovieStore()
 </script>
+
+<style scoped>
+.select {
+  max-width: 200px;
+}
+</style>

@@ -8,7 +8,7 @@ export const useMovieStore = defineStore('movieStore', () => {
     const selectedSort = ref('')
     const searchQuery = ref('')
     const page = ref(1)
-    const limit = ref(10)
+    const limit = ref(15)
     const sortOptions = ref([
         { value: 'year', title: 'По году'},
         { value: 'rating', title: 'По рейтингу'},
@@ -45,7 +45,6 @@ export const useMovieStore = defineStore('movieStore', () => {
     const totalPages = computed(() => {
         return filteredMovies.value.length
     })
-    console.log(totalPages.value);
 
     const pageCount = computed(() => {
         return Math.ceil(totalPages.value / limit.value)
