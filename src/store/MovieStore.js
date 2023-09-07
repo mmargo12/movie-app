@@ -4,7 +4,7 @@ import kino1 from '@/movies/kinopoisk-1.json'
 
 
 export const useMovieStore = defineStore('movieStore', () => {
-    const movies = ref([])
+    const movies = ref(kino1.docs)
     const isMovieLoading = ref(false)
     const selectedSort = ref('')
     const searchQuery = ref('')
@@ -20,15 +20,11 @@ export const useMovieStore = defineStore('movieStore', () => {
     const sortedMovies = computed(() => {
         return [...movies].sort((movie1, movie2) => movie1[selectedSort]?.localCompare(movie2[selectedSort]))
     })
-    const sortedAndSearchedPosts = computed(() => {
+    const sortedAndSearchedMovies = computed(() => {
         return sortedMovies.filter(movie => movie.title.toLowerCase().includes(searchQuery.toLowerCase()))
     })
 
-    movies.value = kino1.docs
-
-    const watchMovies = () => console.log(movies.value)
-
     return {
-        movies, watchMovies
+        movies, searchQuery, sortedAndSearchedMovies
     }
 })

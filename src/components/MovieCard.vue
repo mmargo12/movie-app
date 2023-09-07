@@ -1,14 +1,13 @@
 <template>
-    <v-container class="fill-height" padding="0">
         <v-hover v-slot="{isHovering, props}">
             <v-card 
             color="black" 
-            width="185" 
-            height="277"
+            width="300" 
+            height="533"
             v-bind="props"
             >
                 <v-img 
-                    :src="image" 
+                    :src="movie.poster.url" 
                     cover
                     :aspect-ratio="9/16"
                 >
@@ -20,32 +19,25 @@
                             v-if="isHovering"
                             style="height: 100%"
                         >
-                            <v-card-title class="text-white title text-wrap flex-start align-self-start" min-height="100">{{ title}}</v-card-title>
-                            <v-card-subtitle class="text- bg-yellow d-inline pa-1 align-self-start">{{ rating }}</v-card-subtitle>
-                            <v-card-subtitle>{{ year }}</v-card-subtitle>
+                            <v-card-title class="text-white title text-wrap flex-start align-self-start" min-height="100">{{ movie.name }}</v-card-title>
+                            <v-card-subtitle class="text- bg-yellow d-inline pa-1 align-self-start">{{ movie.rating.imdb }}</v-card-subtitle>
+                            <v-card-subtitle>{{ movie.year }}</v-card-subtitle>
                         </v-card-item>
                     </v-expand-transition>
             
                 </v-img>
             </v-card>
         </v-hover>
-    </v-container>
 </template>
   
 <script setup>
 import { ref } from 'vue';
-    const props = defineProps({
-        title: String,
-        rating: Number,
-        image: String,
-        year: Number
-    })
-    const moreInfo = ref(false)
+const props = defineProps({
+    movie: Object
+})
+const moreInfo = ref(false)
 
-    const showInfo = () => {
-        moreInfo.value = !moreInfo.value
-        console.log(moreInfo.value);
-    }
+    
 </script>  
 
 <style scoped>
