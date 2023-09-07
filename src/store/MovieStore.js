@@ -12,19 +12,33 @@ export const useMovieStore = defineStore('movieStore', () => {
     const limit = ref(10)
     const totalPages = ref(0)
     const sortOptions = ref([
-        { value: 'year', name: 'По году'},
-        { value: 'rating', name: 'По рейтингу'},
-        { value: 'length', name: 'По длине'}
+        { value: 'year', title: 'По году'},
+        { value: 'rating', title: 'По рейтингу'},
+        { value: 'movieLength', title: 'По длине'}
     ])
-    
+
     const sortedMovies = computed(() => {
-        return [...movies].sort((movie1, movie2) => movie1[selectedSort]?.localCompare(movie2[selectedSort]))
+        const sortingBy = selectedSort.value
+        if (sortingBy === 'rating') {
+            return movies.value.slice(0).sort((movie1, movie2) => {
+                return (movie2[sortingBy].imdb - movie1[sortingBy].imdb)
+            })
+        }
+        return movies.value.slice(0).sort((movie1, movie2) => {
+            return movie2[sortingBy] - movie1[sortingBy]
+        })
     })
-    const sortedAndSearchedMovies = computed(() => {
-        return sortedMovies.filter(movie => movie.title.toLowerCase().includes(searchQuery.toLowerCase()))
+
+    const filteredMovies = computed(() => {
+        
+        const query = searchQuery.value.toLowerCase()
+        console.log(sortedMovies.value);
+        return sortedMovies.value.filter(movie => {
+            return movie.name.toLowerCase().includes(query)
+        })
     })
 
     return {
-        movies, searchQuery, sortedAndSearchedMovies
+        movies, searchQuery, filteredMovies, sortOptions, selectedSort
     }
 })

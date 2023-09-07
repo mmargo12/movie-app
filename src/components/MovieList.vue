@@ -1,8 +1,8 @@
 <template>
-    <v-container padding="0" class="d-flex flex-wrap flex-row">
+    <v-container class="d-flex flex-wrap flex-row">
       <v-responsive width="200" >
         <div class="d-flex flex-row flex-wrap movie-list"> 
-          <MovieCard v-for="movie in movies" :movie="movie" :key="movie.id" padding="0" ></MovieCard>
+          <MovieCard v-for="movie in movies" :movie="movie" :key="movie.id"></MovieCard>
         </div>
         
       </v-responsive>

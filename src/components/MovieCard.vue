@@ -2,8 +2,8 @@
         <v-hover v-slot="{isHovering, props}">
             <v-card 
             color="black" 
-            width="300" 
-            height="533"
+            width="250" 
+            height="400"
             v-bind="props"
             >
                 <v-img 
