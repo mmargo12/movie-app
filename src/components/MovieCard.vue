@@ -31,13 +31,9 @@
 </template>
   
 <script setup>
-import { ref } from 'vue';
 const props = defineProps({
     movie: Object
 })
-const moreInfo = ref(false)
-
-    
 </script>  
 
 <style scoped>

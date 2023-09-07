@@ -17,7 +17,14 @@
       v-model="movieStore.selectedSort"
     ></v-select>
   </v-container>
-  <MovieList :movies="movieStore.filteredMovies"></MovieList>
+  <MovieList :movies="movieStore.paginationedMovies"></MovieList>
+  <v-container>
+    <v-pagination
+      v-model="movieStore.page"
+      rounded="circle"
+      :length="movieStore.pageCount"
+    ></v-pagination>
+  </v-container>
 </template>
 
 <script setup>

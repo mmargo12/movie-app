@@ -2,7 +2,6 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import kino1 from '@/movies/kinopoisk-1.json'
 
-
 export const useMovieStore = defineStore('movieStore', () => {
     const movies = ref(kino1.docs)
     const isMovieLoading = ref(false)
@@ -10,12 +9,15 @@ export const useMovieStore = defineStore('movieStore', () => {
     const searchQuery = ref('')
     const page = ref(1)
     const limit = ref(10)
-    const totalPages = ref(0)
     const sortOptions = ref([
         { value: 'year', title: 'По году'},
         { value: 'rating', title: 'По рейтингу'},
         { value: 'movieLength', title: 'По длине'}
     ])
+
+    const visibleMovies = computed(() => {
+        return movies.value.slice((page.value - 1) * limit.value, page.value * limit.value)
+    })
 
     const sortedMovies = computed(() => {
         const sortingBy = selectedSort.value
@@ -30,15 +32,26 @@ export const useMovieStore = defineStore('movieStore', () => {
     })
 
     const filteredMovies = computed(() => {
-        
         const query = searchQuery.value.toLowerCase()
-        console.log(sortedMovies.value);
         return sortedMovies.value.filter(movie => {
             return movie.name.toLowerCase().includes(query)
         })
     })
 
+    const paginationedMovies = computed(() => {
+        return filteredMovies.value.slice((page.value - 1) * limit.value, page.value * limit.value)
+    })
+
+    const totalPages = computed(() => {
+        return filteredMovies.value.length
+    })
+    console.log(totalPages.value);
+
+    const pageCount = computed(() => {
+        return Math.ceil(totalPages.value / limit.value)
+    })
+
     return {
-        movies, searchQuery, filteredMovies, sortOptions, selectedSort
+        movies, searchQuery, sortOptions, selectedSort, page, pageCount, limit, visibleMovies, paginationedMovies
     }
 })
