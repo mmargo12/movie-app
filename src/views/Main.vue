@@ -6,7 +6,8 @@
       prepend-inner-icon="mdi-magnify"
       v-model="movieStore.searchQuery"
       variant="outlined"
-      density="compact" 
+      density="compact"
+      bg-color="indigo-darken-4" 
     ></v-text-field>
     <v-select 
       label="Сортировать"
@@ -15,6 +16,7 @@
       v-model="movieStore.selectedSort"
       variant="outlined"
       class="select"
+      bg-color="indigo-darken-4" 
     ></v-select>
   </v-container>
   <MovieList :movies="movieStore.paginationedMovies" class="pt-0"></MovieList>

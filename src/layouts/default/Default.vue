@@ -1,5 +1,5 @@
 <template>
-  <v-app padding="0">
+  <v-app class="bg-indigo-darken-2">
     <default-view />
   </v-app>
 </template>

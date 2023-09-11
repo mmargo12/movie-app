@@ -1,33 +1,26 @@
 <template>
-        <v-hover v-slot="{isHovering, props}">
             <v-card 
-            color="black" 
+            variant="outlined"
             width="225" 
-            height="360"
+            height="425"
             v-bind="props"
+            class="bg-indigo-darken-4"
             >
                 <v-img 
                     :src="movie.poster.url" 
-                    cover
+                    height="335"
                     :aspect-ratio="9/16"
                 >
-                    <v-expand-transition>
-                        <v-card-item 
-                            class="pa-0 bg-black d-flex flex-column 
-                            justify-start align-start transition-fast-in-fast-out 
-                            -left flex-start card" 
-                            v-if="isHovering"
-                            style="height: 100%"
-                        >
-                            <v-card-title class="text-white title text-wrap flex-start align-self-start" min-height="100">{{ movie.name }}</v-card-title>
-                            <v-card-subtitle class="bg-yellow d-inline pa-1 align-self-start">{{ movie.rating.imdb }}</v-card-subtitle>
-                            <v-card-subtitle>{{ movie.year }}</v-card-subtitle>
-                        </v-card-item>
-                    </v-expand-transition>
-            
                 </v-img>
+                <div class="d-flex flex-column align-center">
+                    <v-card-title class="title pt-0 pb-0">{{ movie.name }}</v-card-title>
+                    <v-card-subtitle>{{ movie.year }}</v-card-subtitle>
+                    <v-card-subtitle class="pa-1 bg-yellow-lighten-1">{{ movie.rating.imdb }}</v-card-subtitle>
+                </div>
+                
+            
+                
             </v-card>
-        </v-hover>
 </template>
   
 <script setup>
@@ -37,8 +30,8 @@ const props = defineProps({
 </script>  
 
 <style scoped>
-.card {
-    text-align: left;
-
+.title {
+    word-break: break-word;
+    max-width: 225px;
 }
 </style>
