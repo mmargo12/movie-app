@@ -6,7 +6,7 @@
             <v-spacer></v-spacer>
             <v-toolbar-items>
                 <v-btn @click="$router.push('/')">Фильмы</v-btn>
-                <v-btn>Моё</v-btn>
+                <v-btn @click="$router.push('/my')">Моё</v-btn>
             </v-toolbar-items>
         </v-toolbar>
       </v-responsive>

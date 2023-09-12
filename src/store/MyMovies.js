@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ref, watch, onMounted } from "vue";
-import { useMovieStore } from "./MovieStore";
 
 export const useMyMoviesStore = defineStore('myMovieStore', () => {
     const myBookmarks = ref([])

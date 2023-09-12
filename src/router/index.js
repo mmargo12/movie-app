@@ -15,9 +15,9 @@ const routes = [
         component: () => import(/* webpackChunkName: "home" */ '@/views/Main.vue'),
       },
       {
-        path: '/movie/:id',
-        name: 'MovieId',
-        component: () => import('@/views/MovieIdCard.vue')
+        path: '/my',
+        name: 'MyMovies',
+        component: () => import('@/views/MyMovies.vue')
       }
     ],
   },
