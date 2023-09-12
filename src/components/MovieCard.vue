@@ -23,6 +23,7 @@
         v-model="dialog"
         width="auto"
     >
+    <v-responsive>
         <v-card
             class="d-flex flex-row bg-indigo-darken-1 rounded-lg"
             height="550px"
@@ -35,7 +36,24 @@
             >
                 </v-img>
                 <div class="d-flex flex-column">
-                    <v-card-title class="dialog-title">{{ movie.name }}</v-card-title>
+                    <div class="d-flex flex-row justify-space-between">
+                        <v-card-title class="dialog-title">{{ movie.name }}</v-card-title>
+                        <v-icon 
+                            class="ma-2" 
+                            v-if="!myMoviesStore.myBookmarks.includes(movie.id)" 
+                            icon="mdi-bookmark-outline" 
+                            size="x-large"
+                            @click="myMoviesStore.addToUsersMovies(movie.id)"
+                        ></v-icon> 
+                        <v-icon 
+                            class="ma-2"
+                            v-else 
+                            icon="mdi-bookmark"
+                            size="x-large"
+                            @click="myMoviesStore.removeFromUsersMovies(movie.id)"
+                        ></v-icon>
+                    </div>
+                    
                     <div class="d-flex flex-row">
                         <v-card-subtitle class="pr-0">{{ movie.alternativeName ?? movie.name }}, </v-card-subtitle>
                         <v-card-subtitle class="pl-2">{{ movie.year }}</v-card-subtitle>
@@ -46,16 +64,16 @@
                         <v-card-subtitle class="pl-2">{{ movie.movieLength }} мин.</v-card-subtitle>
                     </div>
                     <v-card-text>{{ movie.description }}</v-card-text>
-                    <!-- <v-icon icon="mdi-bookmark"></v-icon>
-                    <v-icon icon="mdi-bookmark-outline"></v-icon> -->
                     <!-- <v-card-actions @click="$router.push(`/movie/${movie.id}`)">Подробнее</v-card-actions> -->
                 </div>
         </v-card>
+    </v-responsive>
     </v-dialog>
 </template>
   
 <script setup>
 import { ref, computed } from 'vue';
+import { useMyMoviesStore } from '@/store/MyMovies'
 
 const props = defineProps({
     movie: Object
@@ -70,11 +88,18 @@ const movieType = computed(() => {
     else if (props.movie.type === 'cartoon') {
         return 'мультфильм'
     }
-    else {
+    else if (props.movie.type === 'tv-series') {
         return 'сериал'
     }
+    else if (props.movie.type === 'animated-series') {
+        return 'мультсериал'
+    }
+    else {
+        return 'аниме'
+    }
 })
-//@click="$router.push(`/movie/${movie.id}`)"
+
+const myMoviesStore = useMyMoviesStore()
 </script>  
 
 <style scoped>
@@ -89,4 +114,5 @@ const movieType = computed(() => {
     text-wrap: wrap;
     line-height: 3rem !important;
 }
+
 </style>

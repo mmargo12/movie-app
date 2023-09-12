@@ -4,7 +4,6 @@ import kino1 from '@/movies/kinopoisk-1.json'
 
 export const useMovieStore = defineStore('movieStore', () => {
     const movies = ref(kino1.docs)
-    const isMovieLoading = ref(false)
     const selectedSort = ref('')
     const searchQuery = ref('')
     const page = ref(1)

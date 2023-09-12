@@ -32,7 +32,7 @@
 <script setup>
 import MovieList from '@/components/MovieList.vue'
 import NavBar from '@/components/Navbar.vue'
-import { useMovieStore } from '../store/MovieStore'
+import { useMovieStore } from '@/store/MovieStore'
 
 const movieStore =  useMovieStore()
 </script>
