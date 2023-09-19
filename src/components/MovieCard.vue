@@ -63,8 +63,24 @@
                         <v-card-subtitle class="pr-0">{{ movieType }}</v-card-subtitle>
                         <v-card-subtitle class="pl-2">{{ movie.movieLength }} мин.</v-card-subtitle>
                     </div>
+                    <div class="d-flex flex-row align-center">
+                        <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
+                        <v-rating
+                            v-model="rating"
+                            hover
+                            size="small"
+                            density="comfortable"
+                            @input="updateRating">
+                            <template v-slot:item="props">
+                                <v-icon 
+                                :color="props.isFilled ? 'white' : 'indigo-lighten-1'"
+                                @click="myMoviesStore.updateRating(props, movie.id)">
+                                    mdi-star
+                                </v-icon>
+                            </template>
+                        </v-rating>
+                    </div>
                     <v-card-text>{{ movie.description }}</v-card-text>
-                    <!-- <v-card-actions @click="$router.push(`/movie/${movie.id}`)">Подробнее</v-card-actions> -->
                 </div>
         </v-card>
     </v-responsive>
@@ -80,6 +96,7 @@ const props = defineProps({
 })
 
 const dialog = ref(false)
+const rating = ref(0)
 
 const movieType = computed(() => {
     if (props.movie.type === 'movie') {
@@ -99,6 +116,10 @@ const movieType = computed(() => {
     }
 })
 
+const updateRating = (rating, id) => {
+        console.log(rating.value, id);
+    }
+
 const myMoviesStore = useMyMoviesStore()
 </script>  
 
@@ -114,5 +135,4 @@ const myMoviesStore = useMyMoviesStore()
     text-wrap: wrap;
     line-height: 3rem !important;
 }
-
 </style>

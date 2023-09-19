@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import kino1 from '@/movies/kinopoisk-1.json'
-import { useMyMoviesStore } from "./MyMovies";
 
 export const useMovieStore = defineStore('movieStore', () => {
     const movies = ref(kino1.docs)
@@ -49,20 +48,6 @@ export const useMovieStore = defineStore('movieStore', () => {
     const pageCount = computed(() => {
         return Math.ceil(totalPages.value / limit.value)
     })
-
-    const myMoviesStore = useMovieStore()
-
-    // const myMovies = computed(() => {
-    //     console.log(myMoviesStore.myBookmarks);
-    //     const myArr = ref([])
-    //     movies.value.forEach(el => {
-    //         // if (myMoviesStore.myBookmarks.includes(el.id)) {
-    //         // myArr.push(el)
-    //         // }
-    //         myArr.push(el)
-    //     });
-    //     return myArr
-    // })
 
     return {
         movies, searchQuery, sortOptions, selectedSort, page, pageCount, limit, visibleMovies, paginationedMovies
