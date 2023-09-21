@@ -28,19 +28,44 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
     const listRatings = computed(() => {
         const myMovies = ref([])
         movieStore.movies.forEach(movie => {
-            if (myRatings.value.id === movie.id ) {
-                myMovies.value.push(movie)
-                console.log(movie.id);
-            }
+            myRatings.value.forEach(ratedMovie => {
+                if (ratedMovie.id === movie.id ) {
+                    myMovies.value.push(movie)
+                    console.log(movie.id);
+                }
+            })
         });
         return myMovies.value  
     })
 
+    const getMovieRating = computed((id) => {
+        if (myRatings.value.findIndex(ratedMovie => ratedMovie.id === id) > -1 ) {
+                    return myRatings.value[myRatings.value.findIndex(ratedMovie => ratedMovie.id === movie.id)].usersRating
+        } 
+            else {
+                    return 0
+        }
+    })
+
     const updateRating = (rating, id) => {
-        myRatings.value.push({
-            id: id,
-            usersRating: rating.value
-        })
+        if (myRatings.value.length === 0) {
+            myRatings.value.push({
+                id: id,
+                usersRating: rating.value
+            })
+        }
+        else {
+            const indexOfMovie = myRatings.value.findIndex(el => el.id === id)
+            if (indexOfMovie > -1) {
+                myRatings.value[indexOfMovie].usersRating = rating.value
+            }
+            else {
+                myRatings.value.push({
+                    id: id,
+                    usersRating: rating.value
+                })
+            }
+        }
         console.log(myRatings.value);
     }
 
@@ -54,10 +79,10 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
       
     onMounted(() => {
         myBookmarks.value = JSON.parse(localStorage.getItem('myBookmarks')) || [] 
-        myRatings.value = JSON.parse(localStorage.getItem('myRatings')) || []
+        myRatings.value = JSON.parse(localStorage.getItem('myRatings')) || [] 
     })
 
     return {
-        myBookmarks, addToUsersMovies, removeFromUsersMovies, listBookmarks, listRatings, updateRating
+        myBookmarks, myRatings, addToUsersMovies, removeFromUsersMovies, listBookmarks, listRatings, updateRating, getMovieRating
     }
 })

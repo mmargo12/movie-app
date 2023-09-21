@@ -66,11 +66,11 @@
                     <div class="d-flex flex-row align-center">
                         <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
                         <v-rating
-                            v-model="rating"
+                            v-model="myMoviesStore.myRatings[myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id)].usersRating"
                             hover
                             size="small"
                             density="comfortable"
-                            @input="updateRating">
+                            >
                             <template v-slot:item="props">
                                 <v-icon 
                                 :color="props.isFilled ? 'white' : 'indigo-lighten-1'"
@@ -79,7 +79,10 @@
                                 </v-icon>
                             </template>
                         </v-rating>
+                        
                     </div>
+                    {{ myMoviesStore.myRatings }}
+                    
                     <v-card-text>{{ movie.description }}</v-card-text>
                 </div>
         </v-card>
@@ -116,11 +119,16 @@ const movieType = computed(() => {
     }
 })
 
-const updateRating = (rating, id) => {
-        console.log(rating.value, id);
-    }
-
 const myMoviesStore = useMyMoviesStore()
+
+// const getRating = computed((movie.id) => {
+//      if (myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id) > -1 ) {
+//         return myMoviesStore.myRatings[myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id)].usersRating
+//      } 
+//      else {
+//         return rating
+//      }
+// })
 </script>  
 
 <style scoped>
@@ -134,5 +142,6 @@ const myMoviesStore = useMyMoviesStore()
     font-weight: 700;
     text-wrap: wrap;
     line-height: 3rem !important;
+    flex: initial;
 }
 </style>
