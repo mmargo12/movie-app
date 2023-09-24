@@ -66,23 +66,14 @@
                     <div class="d-flex flex-row align-center">
                         <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
                         <v-rating
-                            v-model="myMoviesStore.myRatings[myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id)].usersRating"
+                            v-model="movie.usersRating"
                             hover
                             size="small"
                             density="comfortable"
-                            >
-                            <template v-slot:item="props">
-                                <v-icon 
-                                :color="props.isFilled ? 'white' : 'indigo-lighten-1'"
-                                @click="myMoviesStore.updateRating(props, movie.id)">
-                                    mdi-star
-                                </v-icon>
-                            </template>
+                            @click="myMoviesStore.updateRating(movie.usersRating, movie.id)"
+                        >
                         </v-rating>
-                        
                     </div>
-                    {{ myMoviesStore.myRatings }}
-                    
                     <v-card-text>{{ movie.description }}</v-card-text>
                 </div>
         </v-card>
@@ -99,7 +90,6 @@ const props = defineProps({
 })
 
 const dialog = ref(false)
-const rating = ref(0)
 
 const movieType = computed(() => {
     if (props.movie.type === 'movie') {
@@ -120,15 +110,6 @@ const movieType = computed(() => {
 })
 
 const myMoviesStore = useMyMoviesStore()
-
-// const getRating = computed((movie.id) => {
-//      if (myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id) > -1 ) {
-//         return myMoviesStore.myRatings[myMoviesStore.myRatings.findIndex(ratedMovie => ratedMovie.id === movie.id)].usersRating
-//      } 
-//      else {
-//         return rating
-//      }
-// })
 </script>  
 
 <style scoped>

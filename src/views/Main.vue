@@ -7,7 +7,7 @@
       v-model="movieStore.searchQuery"
       variant="outlined"
       density="compact"
-      bg-color="indigo-darken-4" 
+      bg-color="indigo-darken-4"
     ></v-text-field>
     <v-select 
       label="Сортировать"
@@ -19,6 +19,7 @@
       bg-color="indigo-darken-4" 
     ></v-select>
   </v-container>
+  <!-- <Filtration :searchQuery="movieStore.searchQuery" :sortOptions="movieStore.sortOptions" :selectedSort="movieStore.selectedSort"></Filtration> -->
   <MovieList :movies="movieStore.paginationedMovies" class="pt-0"></MovieList>
   <v-container>
     <v-pagination
@@ -30,6 +31,7 @@
 </template>
 
 <script setup>
+import Filtration from '@/components/Filtration.vue';
 import MovieList from '@/components/MovieList.vue'
 import NavBar from '@/components/Navbar.vue'
 import { useMovieStore } from '@/store/MovieStore'

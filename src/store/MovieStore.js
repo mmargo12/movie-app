@@ -14,6 +14,10 @@ export const useMovieStore = defineStore('movieStore', () => {
         { value: 'movieLength', title: 'По длине'}
     ])
 
+    movies.value.forEach(el => {
+        el.usersRating = 0
+    })
+
     const visibleMovies = computed(() => {
         return movies.value.slice((page.value - 1) * limit.value, page.value * limit.value)
     })
