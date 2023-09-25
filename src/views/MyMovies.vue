@@ -19,21 +19,70 @@
         bg-color="indigo-darken-4" 
         ></v-select>
     </v-container>
-    <v-container>
-        <h2>Мои закладки</h2>
-        <MovieList :movies="myMovies.listBookmarks" class="pt-0"></MovieList>
-        <h2>Moи оценки</h2>
-        <MovieList :movies="myMovies.listRatings" class="pt-0"></MovieList>
+    <v-container class="pt-0">
+        <div class="d-flex flex-row">
+            <h2 class="mr-2">Мои закладки</h2>
+            <v-btn 
+                variant="text" 
+                class="pa-0" 
+                style="min-width: 40px;"
+                @click="showBookmarks = !showBookmarks"
+            >
+                <v-icon 
+                    icon="mdi-chevron-double-down" 
+                    size="x-large"
+                    v-if="showBookmarks"
+                >
+                </v-icon>
+                <v-icon 
+                    icon="mdi-chevron-double-up" 
+                    size="x-large"
+                    v-else
+                >
+                </v-icon>
+            </v-btn>
+        </div>
+        <MovieList :movies="myMovies.filteredBookmarkedMovies" class="pt-0" v-if="showBookmarks"></MovieList>
+        <div class="d-flex flex-row">
+            <h2>Moи оценки</h2>
+            <v-btn 
+                variant="text" 
+                class="pa-0" 
+                style="min-width: 40px;"
+                @click="showRated = !showRated"
+            >
+                <v-icon 
+                    icon="mdi-chevron-double-down" 
+                    size="x-large"
+                    v-if="showRated"
+                >
+                </v-icon>
+                <v-icon 
+                    icon="mdi-chevron-double-up" 
+                    size="x-large"
+                    v-else
+                >
+                </v-icon>
+            </v-btn>
+        </div>
+        <MovieList :movies="myMovies.filteredRatedMovies" class="pt-0" v-if="showRated"></MovieList>
     </v-container>
-    
 </template>
 
 <script setup>
 import MovieList from '@/components/MovieList.vue'
 import NavBar from '@/components/Navbar.vue'
 import {useMyMoviesStore } from '@/store/MyMovies.js'
-import { useMovieStore } from '@/store/MovieStore'
+import { ref } from 'vue';
 
-const movieStore =  useMovieStore()
+const showBookmarks = ref(true)
+const showRated = ref(true)
+
 const myMovies = useMyMoviesStore()
 </script>
+
+<style scoped>
+.select {
+  max-width: 200px;
+}
+</style>

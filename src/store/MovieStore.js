@@ -7,7 +7,7 @@ export const useMovieStore = defineStore('movieStore', () => {
     const selectedSort = ref('')
     const searchQuery = ref('')
     const page = ref(1)
-    const limit = ref(15)
+    const limit = ref(25)
     const sortOptions = ref([
         { value: 'year', title: 'По году'},
         { value: 'rating', title: 'По рейтингу'},

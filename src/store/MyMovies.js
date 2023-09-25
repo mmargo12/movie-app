@@ -38,7 +38,6 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
             myRatings.value.forEach(ratedMovie => {
                 if (ratedMovie.id === movie.id ) {
                     myMovies.value.push(movie)
-                    console.log(movie.id);
                 }
             })
         });
@@ -46,7 +45,6 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
     })
 
     const updateRating = (rating, id) => {
-        console.log(111);
         if (myRatings.value.length === 0) {
             myRatings.value.push({
                 id: id,
@@ -67,7 +65,19 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
         }
     }
 
-    const sortedMovies = computed(() => {
+    const sortedBookmarkedMovies = computed(() => {
+        const sortingBy = selectedSort.value
+        if (sortingBy === 'rating') {
+            return listBookmarks.value.slice(0).sort((movie1, movie2) => {
+                return (movie2[sortingBy].imdb - movie1[sortingBy].imdb)
+            })
+        }
+        return listBookmarks.value.slice(0).sort((movie1, movie2) => {
+            return movie2[sortingBy] - movie1[sortingBy]
+        })
+    })
+
+    const sortedRatedMovies = computed(() => {
         const sortingBy = selectedSort.value
         if (sortingBy === 'rating') {
             return listRatings.value.slice(0).sort((movie1, movie2) => {
@@ -79,9 +89,16 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
         })
     })
 
-    const filteredMovies = computed(() => {
+    const filteredBookmarkedMovies = computed(() => {
         const query = searchQuery.value.toLowerCase()
-        return sortedMovies.value.filter(movie => {
+        return sortedBookmarkedMovies.value.filter(movie => {
+            return movie.name.toLowerCase().includes(query)
+        })
+    })
+
+    const filteredRatedMovies = computed(() => {
+        const query = searchQuery.value.toLowerCase()
+        return sortedRatedMovies.value.filter(movie => {
             return movie.name.toLowerCase().includes(query)
         })
     })
@@ -107,6 +124,6 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
     })
 
     return {
-        myBookmarks, myRatings, addToUsersMovies, removeFromUsersMovies, listBookmarks, listRatings, updateRating, sortedMovies, filteredMovies, sortOptions, searchQuery, selectedSort
+        myBookmarks, myRatings, addToUsersMovies, removeFromUsersMovies, listRatings, updateRating, filteredBookmarkedMovies,filteredRatedMovies, sortOptions, searchQuery, selectedSort
     }
 })
