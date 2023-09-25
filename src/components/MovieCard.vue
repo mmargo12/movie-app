@@ -22,68 +22,84 @@
     <v-dialog
         v-model="dialog"
         width="auto"
+        scrollable
     >
-    <v-responsive>
-        <v-card
-            class="d-flex flex-row bg-indigo-darken-1 rounded-lg"
-            height="550px"
-            width="1000px"
-        >
-            <v-img 
-                :src="movie.poster.url" 
-                :aspect-ratio="9/16"
-                width="368px"
+        <v-responsive>
+            <v-card
+                class="d-flex flex-column bg-indigo-darken-1 rounded-lg dialog"
+                width="1000px"
+                max-height="600px"
             >
-                </v-img>
-                <div class="d-flex flex-column">
-                    <div class="d-flex flex-row justify-space-between">
-                        <v-card-title class="dialog-title">{{ movie.name }}</v-card-title>
-                        <v-icon 
-                            class="ma-2" 
-                            v-if="!myMoviesStore.myBookmarks.includes(movie.id)" 
-                            icon="mdi-bookmark-outline" 
-                            size="x-large"
-                            @click="myMoviesStore.addToUsersMovies(movie.id)"
-                        ></v-icon> 
-                        <v-icon 
-                            class="ma-2"
-                            v-else 
-                            icon="mdi-bookmark"
-                            size="x-large"
-                            @click="myMoviesStore.removeFromUsersMovies(movie.id)"
-                        ></v-icon>
+                <div class="d-flex flex-row bg-indigo-darken-1 rounded-lg mb-4" height="550px">
+                    <v-img 
+                        :src="movie.poster.url" 
+                        :aspect-ratio="9/16"
+                        width="368px"
+                        height="550px"
+                    >
+                    </v-img>
+                    <div class="d-flex flex-column">
+                        <div class="d-flex flex-row justify-space-between">
+                            <v-card-title class="dialog-title">{{ movie.name }}</v-card-title>
+                            <v-icon 
+                                class="ma-2" 
+                                v-if="!myMoviesStore.myBookmarks.includes(movie.id)" 
+                                icon="mdi-bookmark-outline" 
+                                size="x-large"
+                                @click="myMoviesStore.addToUsersMovies(movie.id)"
+                            >
+                            </v-icon> 
+                            <v-icon 
+                                class="ma-2"
+                                v-else 
+                                icon="mdi-bookmark"
+                                size="x-large"
+                                @click="myMoviesStore.removeFromUsersMovies(movie.id)"
+                            >
+                            </v-icon>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <v-card-subtitle class="pr-0">{{ movie.alternativeName ?? movie.name }}, </v-card-subtitle>
+                            <v-card-subtitle class="pl-2">{{ movie.year }}</v-card-subtitle>
+                            <v-card-subtitle class="px-1 bg-yellow-lighten-1">{{ movie.rating.imdb }}</v-card-subtitle>
+                        </div>
+                        <div class="d-flex flex-row">
+                            <v-card-subtitle class="pr-0">{{ movieType }}</v-card-subtitle>
+                            <v-card-subtitle class="pl-2">{{ movie.movieLength }} мин.</v-card-subtitle>
+                        </div>
+                        <div class="d-flex flex-row align-center">
+                            <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
+                            <v-rating
+                                v-model="movie.usersRating"
+                                hover
+                                size="small"
+                                density="comfortable"
+                                @click="myMoviesStore.updateRating(movie.usersRating, movie.id)"
+                            >
+                            </v-rating>
+                        </div>
+                        <v-card-text>{{ movie.description }}</v-card-text>
+                        
                     </div>
-                    
-                    <div class="d-flex flex-row">
-                        <v-card-subtitle class="pr-0">{{ movie.alternativeName ?? movie.name }}, </v-card-subtitle>
-                        <v-card-subtitle class="pl-2">{{ movie.year }}</v-card-subtitle>
-                        <v-card-subtitle class="px-1 bg-yellow-lighten-1">{{ movie.rating.imdb }}</v-card-subtitle>
-                    </div>
-                    <div class="d-flex flex-row">
-                        <v-card-subtitle class="pr-0">{{ movieType }}</v-card-subtitle>
-                        <v-card-subtitle class="pl-2">{{ movie.movieLength }} мин.</v-card-subtitle>
-                    </div>
-                    <div class="d-flex flex-row align-center">
-                        <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
-                        <v-rating
-                            v-model="movie.usersRating"
-                            hover
-                            size="small"
-                            density="comfortable"
-                            @click="myMoviesStore.updateRating(movie.usersRating, movie.id)"
-                        >
-                        </v-rating>
-                    </div>
-                    <v-card-text>{{ movie.description }}</v-card-text>
                 </div>
-        </v-card>
-    </v-responsive>
+                <div>
+                    <h2 class="pl-3">В том же году вышли:</h2>
+                    <MovieList 
+                        :movies="movieStore.movies.filter(el => el.year === movie.year && el.id !== movie.id)"
+                        class="pa-3"
+                    >
+                    </MovieList>
+                </div>  
+            </v-card>
+        </v-responsive>
     </v-dialog>
 </template>
   
 <script setup>
 import { ref, computed } from 'vue';
 import { useMyMoviesStore } from '@/store/MyMovies'
+import MovieList from './MovieList.vue';
+import { useMovieStore } from '@/store/MovieStore';
 
 const props = defineProps({
     movie: Object
@@ -109,6 +125,7 @@ const movieType = computed(() => {
     }
 })
 
+const movieStore = useMovieStore()
 const myMoviesStore = useMyMoviesStore()
 </script>  
 
@@ -124,5 +141,14 @@ const myMoviesStore = useMyMoviesStore()
     text-wrap: wrap;
     line-height: 3rem !important;
     flex: initial;
+}
+
+.dialog {
+    overflow-y: auto;
+}
+
+.dialog::-webkit-scrollbar {
+    background-color: #3949AB;
+    border-radius: 10px;
 }
 </style>
