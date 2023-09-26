@@ -15,8 +15,8 @@
       :items="movieStore.sortOptions"
       v-model="movieStore.selectedSort"
       variant="outlined"
-      class="select"
       bg-color="indigo-darken-4" 
+      style="max-width: 200px;"
     ></v-select>
   </v-container>
   <MovieList :movies="movieStore.paginationedMovies" class="pa-4 pt-0"></MovieList>
@@ -36,9 +36,3 @@ import { useMovieStore } from '@/store/MovieStore'
 
 const movieStore =  useMovieStore()
 </script>
-
-<style scoped>
-.select {
-  max-width: 200px;
-}
-</style>

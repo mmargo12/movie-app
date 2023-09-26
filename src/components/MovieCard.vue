@@ -14,9 +14,15 @@
         >
         </v-img>
         <div class="d-flex flex-column align-center">
-            <v-card-title class="title pt-0 pb-0">{{ movie.name }}</v-card-title>
-            <v-card-subtitle>{{ movie.year }}</v-card-subtitle>
-            <v-card-subtitle class="pa-1 bg-yellow-lighten-1">{{ movie.rating.imdb }}</v-card-subtitle>
+            <v-card-title class="title pt-0 pb-0">
+                {{ movie.name }}
+            </v-card-title>
+            <v-card-subtitle>
+                {{ movie.year }}
+            </v-card-subtitle>
+            <v-card-subtitle class="pa-1 bg-yellow-lighten-1">
+                {{ movie.rating.imdb }}
+            </v-card-subtitle>
         </div>
     </v-card>
     <v-dialog
@@ -30,7 +36,10 @@
                 width="1000px"
                 max-height="600px"
             >
-                <div class="d-flex flex-row bg-indigo-darken-1 rounded-lg mb-4" height="550px">
+                <div 
+                    class="d-flex flex-row bg-indigo-darken-1 rounded-lg mb-4" 
+                    height="550px"
+                >
                     <v-img 
                         :src="movie.poster.url" 
                         :aspect-ratio="9/16"
@@ -40,7 +49,9 @@
                     </v-img>
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row justify-space-between">
-                            <v-card-title class="dialog-title">{{ movie.name }}</v-card-title>
+                            <v-card-title class="dialog-title">
+                                {{ movie.name }}
+                            </v-card-title>
                             <v-icon 
                                 class="ma-2" 
                                 v-if="!myMoviesStore.myBookmarks.includes(movie.id)" 
@@ -59,16 +70,28 @@
                             </v-icon>
                         </div>
                         <div class="d-flex flex-row">
-                            <v-card-subtitle class="pr-0">{{ movie.alternativeName ?? movie.name }}, </v-card-subtitle>
-                            <v-card-subtitle class="pl-2">{{ movie.year }}</v-card-subtitle>
-                            <v-card-subtitle class="px-1 bg-yellow-lighten-1">{{ movie.rating.imdb }}</v-card-subtitle>
+                            <v-card-subtitle class="pr-0">
+                                {{ movie.alternativeName ?? movie.name }}, 
+                            </v-card-subtitle>
+                            <v-card-subtitle class="pl-2">
+                                {{ movie.year }}
+                            </v-card-subtitle>
+                            <v-card-subtitle class="px-1 bg-yellow-lighten-1">
+                                {{ movie.rating.imdb }}
+                            </v-card-subtitle>
                         </div>
                         <div class="d-flex flex-row">
-                            <v-card-subtitle class="pr-0">{{ movieType }}</v-card-subtitle>
-                            <v-card-subtitle class="pl-2">{{ movie.movieLength }} мин.</v-card-subtitle>
+                            <v-card-subtitle class="pr-0">
+                                {{ movieType }}
+                            </v-card-subtitle>
+                            <v-card-subtitle class="pl-2">
+                                {{ movie.movieLength }} мин.
+                            </v-card-subtitle>
                         </div>
                         <div class="d-flex flex-row align-center">
-                            <v-card-subtitle class="pr-1">Ваша оценка:</v-card-subtitle>
+                            <v-card-subtitle class="pr-1">
+                                Ваша оценка:
+                            </v-card-subtitle>
                             <v-rating
                                 v-model="movie.usersRating"
                                 hover
@@ -78,8 +101,9 @@
                             >
                             </v-rating>
                         </div>
-                        <v-card-text>{{ movie.description }}</v-card-text>
-                        
+                        <v-card-text>
+                            {{ movie.description }}
+                        </v-card-text>
                     </div>
                 </div>
                 <div>
@@ -98,8 +122,9 @@
 <script setup>
 import { ref, computed } from 'vue';
 import { useMyMoviesStore } from '@/store/MyMovies'
-import MovieList from './MovieList.vue';
 import { useMovieStore } from '@/store/MovieStore';
+import MovieList from './MovieList.vue';
+
 
 const props = defineProps({
     movie: Object
@@ -129,26 +154,26 @@ const movieStore = useMovieStore()
 const myMoviesStore = useMyMoviesStore()
 </script>  
 
-<style scoped>
+<style scoped lang="scss">
 .title {
     word-break: break-word;
     max-width: 225px;
 }
 
-.dialog-title {
-    font-size: 50px;
-    font-weight: 700;
-    text-wrap: wrap;
-    line-height: 3rem !important;
-    flex: initial;
-}
-
 .dialog {
     overflow-y: auto;
-}
 
-.dialog::-webkit-scrollbar {
-    background-color: #3949AB;
-    border-radius: 10px;
+    &-title {
+        font-size: 50px;
+        font-weight: 700;
+        text-wrap: wrap;
+        line-height: 3rem !important;
+        flex: initial;
+    }
+
+    &::-webkit-scrollbar {
+        background-color: #3949AB;
+        border-radius: 10px;
+    }
 }
 </style>

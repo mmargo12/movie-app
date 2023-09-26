@@ -15,55 +15,49 @@
         :items="myMovies.sortOptions"
         v-model="myMovies.selectedSort"
         variant="outlined"
-        class="select"
+        style="max-width: 200px;"
         bg-color="indigo-darken-4" 
         ></v-select>
     </v-container>
     <v-container class="pt-0">
         <div class="d-flex flex-row">
             <h2 class="mr-2">Мои закладки</h2>
-            <v-btn 
-                variant="text" 
-                class="pa-0" 
-                style="min-width: 40px;"
+            <v-icon 
+                icon="mdi-chevron-double-down" 
+                size="x-large"
+                v-if="showBookmarks"
                 @click="showBookmarks = !showBookmarks"
+                class="pa-0" 
             >
-                <v-icon 
-                    icon="mdi-chevron-double-down" 
-                    size="x-large"
-                    v-if="showBookmarks"
-                >
-                </v-icon>
-                <v-icon 
-                    icon="mdi-chevron-double-up" 
-                    size="x-large"
-                    v-else
-                >
-                </v-icon>
-            </v-btn>
+            </v-icon>
+            <v-icon 
+                icon="mdi-chevron-double-up" 
+                size="x-large"
+                v-else
+                @click="showBookmarks = !showBookmarks"
+                class="pa-0" 
+            >
+            </v-icon>
         </div>
         <MovieList :movies="myMovies.filteredBookmarkedMovies" class="pt-0" v-if="showBookmarks"></MovieList>
         <div class="d-flex flex-row">
             <h2>Moи оценки</h2>
-            <v-btn 
-                variant="text" 
-                class="pa-0" 
-                style="min-width: 40px;"
+            <v-icon 
+                icon="mdi-chevron-double-down" 
+                size="x-large"
+                v-if="showRated"
                 @click="showRated = !showRated"
+                class="pa-0" 
             >
-                <v-icon 
-                    icon="mdi-chevron-double-down" 
-                    size="x-large"
-                    v-if="showRated"
-                >
-                </v-icon>
-                <v-icon 
-                    icon="mdi-chevron-double-up" 
-                    size="x-large"
-                    v-else
-                >
-                </v-icon>
-            </v-btn>
+            </v-icon>
+            <v-icon 
+                icon="mdi-chevron-double-up" 
+                size="x-large"
+                v-else
+                @click="showRated = !showRated"
+                class="pa-0" 
+            >
+            </v-icon>
         </div>
         <MovieList :movies="myMovies.filteredRatedMovies" class="pt-0" v-if="showRated"></MovieList>
     </v-container>
@@ -80,9 +74,3 @@ const showRated = ref(true)
 
 const myMovies = useMyMoviesStore()
 </script>
-
-<style scoped>
-.select {
-  max-width: 200px;
-}
-</style>

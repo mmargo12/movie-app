@@ -28,7 +28,7 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
             if (myBookmarks.value.includes(movie.id)) {
                 myMovies.value.push(movie)
             }
-        });
+        })
         return myMovies.value  
     })
 
@@ -40,7 +40,7 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
                     myMovies.value.push(movie)
                 }
             })
-        });
+        })
         return myMovies.value  
     })
 
@@ -124,6 +124,6 @@ export const useMyMoviesStore = defineStore('myMovieStore', () => {
     })
 
     return {
-        myBookmarks, myRatings, addToUsersMovies, removeFromUsersMovies, listRatings, updateRating, filteredBookmarkedMovies,filteredRatedMovies, sortOptions, searchQuery, selectedSort
+        myBookmarks, myRatings, addToUsersMovies, removeFromUsersMovies, updateRating, filteredBookmarkedMovies,filteredRatedMovies, sortOptions, searchQuery, selectedSort
     }
 })
