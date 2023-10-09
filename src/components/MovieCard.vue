@@ -5,14 +5,13 @@
         height="430"
         v-bind="props"
         class="bg-indigo-darken-4"
-        @click.stop="dialog = true"
+        @click.stop="isDialogShown = true"
     >
         <v-img 
             :src="movie.poster.url" 
             height="335"
             :aspect-ratio="9/16"
-        >
-        </v-img>
+        />
         <div class="d-flex flex-column align-center">
             <v-card-title class="title pt-0 pb-0">
                 {{ movie.name }}
@@ -21,12 +20,12 @@
                 {{ movie.year }}
             </v-card-subtitle>
             <v-card-subtitle class="pa-1 bg-yellow-lighten-1">
-                {{ movie.rating.imdb }}
+                {{ movie.rating.imdb || movie.rating.kp.toFixed(1)}}
             </v-card-subtitle>
         </div>
     </v-card>
     <v-dialog
-        v-model="dialog"
+        v-model="isDialogShown"
         width="auto"
         scrollable
     >
@@ -37,7 +36,7 @@
                 max-height="600px"
             >
                 <div 
-                    class="d-flex flex-row bg-indigo-darken-1 rounded-lg mb-4" 
+                    class="d-flex flex-row mb-4" 
                     height="550px"
                 >
                     <v-img 
@@ -45,8 +44,7 @@
                         :aspect-ratio="9/16"
                         width="368px"
                         height="550px"
-                    >
-                    </v-img>
+                    />
                     <div class="d-flex flex-column">
                         <div class="d-flex flex-row justify-space-between">
                             <v-card-title class="dialog-title">
@@ -58,16 +56,14 @@
                                 icon="mdi-bookmark-outline" 
                                 size="x-large"
                                 @click="myMoviesStore.addToUsersMovies(movie.id)"
-                            >
-                            </v-icon> 
+                            />
                             <v-icon 
                                 class="ma-2"
                                 v-else 
                                 icon="mdi-bookmark"
                                 size="x-large"
                                 @click="myMoviesStore.removeFromUsersMovies(movie.id)"
-                            >
-                            </v-icon>
+                            />
                         </div>
                         <div class="d-flex flex-row">
                             <v-card-subtitle class="pr-0">
@@ -77,7 +73,7 @@
                                 {{ movie.year }}
                             </v-card-subtitle>
                             <v-card-subtitle class="px-1 bg-yellow-lighten-1">
-                                {{ movie.rating.imdb }}
+                                {{ movie.rating.imdb || movie.rating.kp.toFixed(1)}}
                             </v-card-subtitle>
                         </div>
                         <div class="d-flex flex-row">
@@ -98,8 +94,7 @@
                                 size="small"
                                 density="comfortable"
                                 @click="myMoviesStore.updateRating(movie.usersRating, movie.id)"
-                            >
-                            </v-rating>
+                            />
                         </div>
                         <v-card-text>
                             {{ movie.description }}
@@ -111,8 +106,7 @@
                     <MovieList 
                         :movies="movieStore.movies.filter(el => el.year === movie.year && el.id !== movie.id)"
                         class="pa-3"
-                    >
-                    </MovieList>
+                    />
                 </div>  
             </v-card>
         </v-responsive>
@@ -130,24 +124,28 @@ const props = defineProps({
     movie: Object
 })
 
-const dialog = ref(false)
+const isDialogShown = ref(false)
 
 const movieType = computed(() => {
-    if (props.movie.type === 'movie') {
-        return 'кино'
+    const rusType = ref('')
+    switch (props.movie.type) {
+    case 'movie' :
+        rusType.value = 'кино'
+        break
+    case 'cartoon' :
+        rusType.value = 'мультфильм'
+        break
+    case 'tv-series' :
+        rusType.value = 'сериал'
+        break
+    case 'animated-series' :
+        rusType.value = 'мультсериал'
+        break
+    case 'anime': 
+        rusType.value = 'аниме'
+        break
     }
-    else if (props.movie.type === 'cartoon') {
-        return 'мультфильм'
-    }
-    else if (props.movie.type === 'tv-series') {
-        return 'сериал'
-    }
-    else if (props.movie.type === 'animated-series') {
-        return 'мультсериал'
-    }
-    else {
-        return 'аниме'
-    }
+    return rusType.value
 })
 
 const movieStore = useMovieStore()

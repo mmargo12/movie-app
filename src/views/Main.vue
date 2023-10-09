@@ -1,31 +1,27 @@
 <template>
-  <NavBar></NavBar>
+  <NavBar />
   <v-container>
     <v-text-field 
       label="Поиск" 
-      prepend-inner-icon="mdi-magnify"
-      v-model="movieStore.searchQuery"
+      prepend-inner-icon="mdi-magnify" 
+      v-model="searchQuery" 
       variant="outlined"
-      density="compact"
+      density="compact" 
       bg-color="indigo-darken-4"
-    ></v-text-field>
+    />
     <v-select 
-      label="Сортировать"
-      density="compact"  
-      :items="movieStore.sortOptions"
-      v-model="movieStore.selectedSort"
-      variant="outlined"
+      label="Сортировать" 
+      density="compact" 
+      :items="sortOptions" 
+      v-model="selectedSort"
+      variant="outlined" 
       bg-color="indigo-darken-4" 
-      style="max-width: 200px;"
-    ></v-select>
+      style="max-width: 200px;" 
+    />
   </v-container>
-  <MovieList :movies="movieStore.paginationedMovies" class="pa-4 pt-0"></MovieList>
+  <MovieList :movies="paginationedMovies" class="pa-4 pt-0" />
   <v-container>
-    <v-pagination
-      v-model="movieStore.page"
-      rounded="circle"
-      :length="movieStore.pageCount"
-    ></v-pagination>
+    <v-pagination v-model="page" rounded="circle" :length="pageCount" />
   </v-container>
 </template>
 
@@ -33,6 +29,48 @@
 import MovieList from '@/components/MovieList.vue'
 import NavBar from '@/components/Navbar.vue'
 import { useMovieStore } from '@/store/MovieStore'
+import { computed, ref } from "vue";
 
-const movieStore =  useMovieStore()
+const movieStore = useMovieStore()
+
+const selectedSort = ref('')
+const searchQuery = ref('')
+const page = ref(1)
+const limit = ref(25)
+const sortOptions = ref([
+    { value: 'year', title: 'По году'},
+    { value: 'rating', title: 'По рейтингу'},
+    { value: 'movieLength', title: 'По длине'}
+])
+
+const sortedMovies = computed(() => {
+  const sortingBy = selectedSort.value
+  if (sortingBy === 'rating') {
+    return movieStore.movies.slice(0).sort((movie1, movie2) => {
+      return ((movie2[sortingBy].imdb || movie2[sortingBy].kp) - (movie1[sortingBy].imdb || movie1[sortingBy].kp))
+    })
+  }
+  return movieStore.movies.slice(0).sort((movie1, movie2) => {
+    return movie2[sortingBy] - movie1[sortingBy]
+  })
+})
+
+const filteredMovies = computed(() => {
+  const query = searchQuery.value.toLowerCase()
+  return sortedMovies.value.filter(movie => {
+    return movie.name.toLowerCase().includes(query)
+  })
+})
+
+const paginationedMovies = computed(() => {
+  return filteredMovies.value.slice((page.value - 1) * limit.value, page.value * limit.value)
+})
+
+const totalPages = computed(() => {
+  return filteredMovies.value.length
+})
+
+const pageCount = computed(() => {
+  return Math.ceil(totalPages.value / limit.value)
+})
 </script>
