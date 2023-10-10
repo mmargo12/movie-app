@@ -30,18 +30,13 @@ import MovieList from '@/components/MovieList.vue'
 import NavBar from '@/components/Navbar.vue'
 import { useMovieStore } from '@/store/MovieStore'
 import { computed, ref } from "vue";
+import { sortOptions, limit } from '@/constances'
 
 const movieStore = useMovieStore()
 
 const selectedSort = ref('')
 const searchQuery = ref('')
 const page = ref(1)
-const limit = ref(25)
-const sortOptions = ref([
-    { value: 'year', title: 'По году'},
-    { value: 'rating', title: 'По рейтингу'},
-    { value: 'movieLength', title: 'По длине'}
-])
 
 const sortedMovies = computed(() => {
   const sortingBy = selectedSort.value
@@ -63,7 +58,7 @@ const filteredMovies = computed(() => {
 })
 
 const paginationedMovies = computed(() => {
-  return filteredMovies.value.slice((page.value - 1) * limit.value, page.value * limit.value)
+  return filteredMovies.value.slice((page.value - 1) * limit, page.value * limit)
 })
 
 const totalPages = computed(() => {
@@ -71,6 +66,6 @@ const totalPages = computed(() => {
 })
 
 const pageCount = computed(() => {
-  return Math.ceil(totalPages.value / limit.value)
+  return Math.ceil(totalPages.value / limit)
 })
 </script>

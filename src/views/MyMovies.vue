@@ -47,7 +47,7 @@
                 >
                     Мои оценки
                 </v-expansion-panel-title>
-                <v-expansion-panel-text class="pt-3">
+                <v-expansion-panel-text class="pt-3 panel-text">
                     <MovieList :movies="filteredRatedMovies"/>
                 </v-expansion-panel-text>
                 
@@ -62,15 +62,11 @@ import NavBar from '@/components/Navbar.vue'
 import { useMovieStore } from '@/store/MovieStore';
 import {useMyMoviesStore } from '@/store/MyMovies.js'
 import { ref, computed } from 'vue'
+import { sortOptions } from '@/constances'
 
 const panel = ref(['bookmarks', 'ratings'])
 const selectedSort = ref('')
 const searchQuery = ref('')
-const sortOptions = ref([
-    { value: 'year', title: 'По году'},
-    { value: 'rating', title: 'По рейтингу'},
-    { value: 'movieLength', title: 'По длине'}
-])
 
 const myMovies = useMyMoviesStore()
 const movieStore = useMovieStore()
@@ -136,7 +132,7 @@ const filteredRatedMovies = computed(() => {
 })
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .v-expansion-panel-text__wrapper {
     padding: 0 !important; 
 } 
