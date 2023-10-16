@@ -37,7 +37,6 @@
             >
                 <div 
                     class="d-flex flex-row mb-4" 
-                    height="550px"
                 >
                     <v-img 
                         :src="movie.poster.url" 
