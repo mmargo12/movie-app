@@ -1,9 +1,7 @@
 <template>
   <v-app class="bg-indigo-darken-2">
-    <default-view />
+    <v-main padding="0">
+      <router-view />
+    </v-main>
   </v-app>
 </template>
-
-<script setup>
-  import DefaultView from './View.vue'
-</script>

@@ -133,7 +133,7 @@ const filteredRatedMovies = computed(() => {
 </script>
 
 <style scoped lang="scss">
-.v-expansion-panel-text__wrapper {
+:deep(.v-expansion-panel-text__wrapper) {
     padding: 0 !important; 
 } 
 

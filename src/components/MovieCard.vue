@@ -128,21 +128,21 @@ const isDialogShown = ref(false)
 const movieType = computed(() => {
     const rusType = ref('')
     switch (props.movie.type) {
-    case 'movie' :
-        rusType.value = 'кино'
-        break
-    case 'cartoon' :
-        rusType.value = 'мультфильм'
-        break
-    case 'tv-series' :
-        rusType.value = 'сериал'
-        break
-    case 'animated-series' :
-        rusType.value = 'мультсериал'
-        break
-    case 'anime': 
-        rusType.value = 'аниме'
-        break
+        case 'movie' :
+            rusType.value = 'кино'
+            break
+        case 'cartoon' :
+            rusType.value = 'мультфильм'
+            break
+        case 'tv-series' :
+            rusType.value = 'сериал'
+            break
+        case 'animated-series' :
+            rusType.value = 'мультсериал'
+            break
+        case 'anime': 
+            rusType.value = 'аниме'
+            break
     }
     return rusType.value
 })
